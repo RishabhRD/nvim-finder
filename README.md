@@ -1,7 +1,12 @@
 # nvim-finder
 nvim-finder is a fuzzy finder built upon
-[popfix](https://github.com/RishabhRD/popfix) fuzzy engine. This repository
-if bundle of commands for fuzzy finding various things in neovim.
+[popfix](https://github.com/RishabhRD/popfix) fuzzy engine. This
+repository is a bundle of commands for fuzzy finding various things in neovim.
+
+Popfix's fuzzy engine abstraction is highly extensible and purely written in
+lua. Infact, it is possible to use different fuzzy engines for different jobs.
+One of the major goal of popfix's default fuzzy engine is to remain
+responsive even for big jobs with a good visual performance.
 
 ![](https://user-images.githubusercontent.com/26287448/101091071-ab205700-35dd-11eb-8f28-00bcf6ec63c7.gif)
 
@@ -57,6 +62,13 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    Call: 
    ``:lua require'finder'.files{}``
 
+- **Git Files**
+
+   Iterate through git ls-files in directory.
+
+   Call: 
+   ``:lua require'finder'.git_files{}``
+
 ## Custom Opts
 These are custom opts supported by every nvim-finder command:
 
@@ -106,6 +118,15 @@ you own sorter. To read about sorter see [popfix](https://github.com/RishabhRD/p
 By default fzy native sorter is used.
 
 Example: ``sorter = require'popfix.sorter'.new_fzy_soter()``
+
+## Specialized custom opts for different commands
+
+### Files
+
+#### cmd [string]
+Command used for find files in directory
+
+Example: ``cmd = 'find .'``
 
 
 ## Contribute

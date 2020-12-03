@@ -34,6 +34,7 @@ function M.files(opts)
 			cmd = cmd,
 			cwd = opts.cwd
 		},
+		close_on_bufleave = true,
 		mode = opts.mode or 'editor',
 		height = opts.height,
 		width = opts.width,
@@ -48,6 +49,58 @@ function M.files(opts)
 			init_text = opts.init_text,
 			border = true,
 			title = 'Files'
+		},
+		preview = {
+			type = 'terminal',
+			title = 'Preview',
+			border = true,
+		},
+		sorter = opts.sorter
+	}
+	if opts.preview_disabled then
+		pop_opts.preview = nil
+	end
+	popfix:new(pop_opts)
+end
+
+function M.git_files(opts)
+	opts = opts or {}
+	local cmd
+	if vim.fn.executable("git") then
+		cmd = 'git ls-files'
+	end
+	if not cmd then
+		print("You need to install git for running this program")
+	end
+	opts.cwd = opts.cwd or vim.fn.getcwd()
+	local previewFunction = preview.new_bat_preview(opts.cwd)
+	local fileActions = action.new_file_actions(opts.cwd)
+	local keymaps = mappings.new{
+		close_selected = fileActions.edit,
+		select = previewFunction,
+		tab_close = fileActions.tab,
+		split_close = fileActions.split,
+		vert_split_close = fileActions.vert_split
+	}
+	local pop_opts = {
+		data = {
+			cmd = cmd,
+			cwd = opts.cwd
+		},
+		mode = opts.mode or 'editor',
+		height = opts.height,
+		width = opts.width,
+		callbacks = {
+			select = previewFunction
+		},
+		keymaps = keymaps,
+		list = {
+			border = true,
+		},
+		prompt = {
+			init_text = opts.init_text,
+			border = true,
+			title = 'Git Files'
 		},
 		preview = {
 			type = 'terminal',
