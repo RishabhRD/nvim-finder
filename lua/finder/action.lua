@@ -2,9 +2,10 @@ local path = require'finder.path'
 local M = {}
 
 local function openFile(filename, cwd, option)
+	if filename == nil then return end
 	cwd = cwd or vim.fn.getcwd()
-	local filename = cwd .. '/' .. line
-	filname = path.normalize(filename)
+	filename = cwd .. '/' .. filename
+	filename = path.normalize(filename)
 	if option == 'edit' then
 		vim.cmd(string.format('e %s', filename))
 	elseif option == 'split' then
@@ -21,13 +22,13 @@ function M.new_file_actions(cwd)
 	return{
 		edit = function(_, line)
 			openFile(line, cwd, 'edit')
-		end
+		end,
 		vert_split = function(_, line)
 			openFile(line, cwd, 'vert_split')
-		end
+		end,
 		split = function(_, line)
 			openFile(line, cwd, 'split')
-		end
+		end,
 		tab =  function(_, line)
 			openFile(line, cwd, 'tab')
 		end

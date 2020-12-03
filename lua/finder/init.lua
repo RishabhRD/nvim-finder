@@ -5,21 +5,20 @@ local mappings = require'finder.mappings'
 local M	= {}
 
 function M.files(opts)
+	opts = opts or {}
 	local cmd = opts.cmd
 	if not cmd then
 		if vim.fn.executable("fd") then
 			cmd = 'fd --type f'
 		elseif vim.fn.executable("rg") then
 			cmd = 'rg --files'
-		elseif vim.fn.executable("find")
+		elseif vim.fn.executable("find") then
 			cmd = 'find . -type f'
 		end
 	end
 	if not cmd then
-		print("You need fd, rg or find command to run file search. Otherwise
-		provide yours with format cmd = <cmd>.")
+		print("You need fd, rg or find command to run file search. Otherwise provide yours with format cmd = <cmd>.")
 	end
-	local preview = opts.preview_disabled
 	local sorter = opts.sorter
 	local cwd = opts.cwd or vim.fn.getcwd()
 	local mode = opts.mode or 'editor'
@@ -36,9 +35,14 @@ function M.files(opts)
 		vert_split_close = fileActions.vert_split
 	}
 	local pop_opts = {
+		data = {
+			cmd = cmd,
+			cwd = cwd
+		},
+		mode = mode,
 		height = height,
 		width = width,
-		callback = {
+		callbacks = {
 			select = previewFunction
 		},
 		keymaps = keymaps,
@@ -46,7 +50,7 @@ function M.files(opts)
 			border = true
 		},
 		prompt = {
-			prompt_command = 'Files',
+			prompt_text = 'Files',
 			init_text = init_text,
 			border = true
 		},
@@ -54,12 +58,13 @@ function M.files(opts)
 			type = 'terminal',
 			title = 'Preview',
 			border = true,
-		}
+		},
+		sorter = sorter
 	}
 	if opts.preview_disabled then
 		pop_opts.preview = nil
 	end
-	popfix.new(pop_opts)
+	popfix:new(pop_opts)
 end
 
 return M

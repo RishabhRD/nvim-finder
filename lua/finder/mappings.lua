@@ -44,15 +44,15 @@ function M.new(opts)
 	-- tab
 	if opts.tab_close then
 		local tab_close = function(self)
-			self:close(tab_close)
+			self:close(opts.tab_close)
 		end
 		map.n['<C-t>'] = tab_close
 		map.i['<C-t>'] = tab_close
 	end
 	-- split
-	if otps.split_close then
+	if opts.split_close then
 		local split_close = function(self)
-			self:close(split_close)
+			self:close(opts.split_close)
 		end
 		map.n['<C-x>'] = split_close
 		map.i['<C-x>'] = split_close
@@ -60,7 +60,7 @@ function M.new(opts)
 	-- vert_split mapping
 	if opts.vert_split_close then
 		local split_close = function(self)
-			self:close(vert_split_close)
+			self:close(opts.vert_split_close)
 		end
 		map.n['<C-v>'] = split_close
 		map.i['<C-v>'] = split_close

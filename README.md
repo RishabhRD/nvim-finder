@@ -18,6 +18,9 @@ Install it as any other plugin. For example with vim-plug:
 
 ## Currently supported commands
 
+- files
+Search through all files in directory.
+
 
 
 ## Contribute
