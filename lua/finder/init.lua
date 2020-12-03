@@ -19,14 +19,9 @@ function M.files(opts)
 	if not cmd then
 		print("You need fd, rg or find command to run file search. Otherwise provide yours with format cmd = <cmd>.")
 	end
-	local sorter = opts.sorter
-	local cwd = opts.cwd or vim.fn.getcwd()
-	local mode = opts.mode or 'editor'
-	local height = opts.height
-	local width = opts.width
-	local init_text = opts.init_text
-	local previewFunction = preview.new_bat_preview(cwd)
-	local fileActions = action.new_file_actions(cwd)
+	opts.cwd = opts.cwd or vim.fn.getcwd()
+	local previewFunction = preview.new_bat_preview(opts.cwd)
+	local fileActions = action.new_file_actions(opts.cwd)
 	local keymaps = mappings.new{
 		close_selected = fileActions.edit,
 		select = previewFunction,
@@ -37,29 +32,29 @@ function M.files(opts)
 	local pop_opts = {
 		data = {
 			cmd = cmd,
-			cwd = cwd
+			cwd = opts.cwd
 		},
-		mode = mode,
-		height = height,
-		width = width,
+		mode = opts.mode or 'editor',
+		height = opts.height,
+		width = opts.width,
 		callbacks = {
 			select = previewFunction
 		},
 		keymaps = keymaps,
 		list = {
-			border = true
+			border = true,
 		},
 		prompt = {
-			prompt_text = 'Files',
-			init_text = init_text,
-			border = true
+			init_text = opts.init_text,
+			border = true,
+			title = 'Files'
 		},
 		preview = {
 			type = 'terminal',
 			title = 'Preview',
 			border = true,
 		},
-		sorter = sorter
+		sorter = opts.sorter
 	}
 	if opts.preview_disabled then
 		pop_opts.preview = nil
