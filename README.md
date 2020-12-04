@@ -111,6 +111,12 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    Call:
   ``:lua require'finder'.commands{}``
 
+- **Command History**
+   Search through all commands history.
+
+   Call:
+  ``:lua require'finder'.command_history{}``
+
 
 ## Custom Opts
 These are custom opts supported by every nvim-finder command:

@@ -223,8 +223,6 @@ function M.filetypes(opts)
 		close_selected = actions.edit,
 	}
 	local pop_opts = create_opts(opts)
-	-- getcompletion vimscript function returns all filetypes for filetype
-	-- completion
 	pop_opts.data = vim.fn.getcompletion('', 'filetype')
 	pop_opts.preview = nil
 	pop_opts.keymaps = keymaps
@@ -239,12 +237,35 @@ function M.commands(opts)
 		close_selected = actions.edit,
 	}
 	local pop_opts = create_opts(opts)
-	-- getcompletion vimscript function returns all filetypes for filetype
-	-- completion
 	pop_opts.data = vim.fn.getcompletion('', 'command')
 	pop_opts.preview = nil
 	pop_opts.keymaps = keymaps
 	pop_opts.prompt.title = 'Commands'
+	popfix:new(pop_opts)
+end
+
+function M.command_history(opts)
+	opts = opts or {}
+	local actions = action.new_command_action()
+	local keymaps = mappings.new{
+		close_selected = actions.edit,
+	}
+	local pop_opts = create_opts(opts)
+	local history = vim.fn.execute('history cmd')
+	local historyTable = vim.split(history, "\n")
+	local len = #historyTable
+	pop_opts.data = {}
+	local dataLen = 1
+	-- Here comes the regex magic. First entry is handled differently because
+	-- first entry is different.
+	pop_opts.data[dataLen] = string.gsub(historyTable[len], '^>%s*%d*%s*', '')
+	for i = len - 1, 2, -1 do
+		dataLen = dataLen + 1
+		pop_opts.data[dataLen] = string.gsub(historyTable[i], '^%s*%d*%s*', '')
+	end
+	pop_opts.preview = nil
+	pop_opts.keymaps = keymaps
+	pop_opts.prompt.title = 'Command History'
 	popfix:new(pop_opts)
 end
 
