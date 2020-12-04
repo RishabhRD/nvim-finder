@@ -83,4 +83,32 @@ function M.new_file_location_action(cwd)
 	}
 end
 
+function M.new_help_action()
+	local function helpOpen(line, command)
+		if command == 'edit' then
+			vim.cmd(string.format('help %s', line))
+		elseif command == 'split' then
+			vim.cmd(string.format('help %s', line))
+		elseif command == 'vert_split' then
+			vim.cmd(string.format('vert help %s', line))
+		elseif command == 'tab' then
+			vim.cmd(string.format('tab help %s', line))
+		end
+	end
+	return{
+		edit = function(_, line)
+			helpOpen(line, 'edit')
+		end,
+		vert_split = function(_, line)
+			helpOpen(line, 'vert_split')
+		end,
+		split = function(_, line)
+			helpOpen(line, 'split')
+		end,
+		tab =  function(_, line)
+			helpOpen(line, 'tab')
+		end
+	}
+end
+
 return M

@@ -2,6 +2,7 @@ local popfix = require'popfix'
 local preview = require'finder.previewer'
 local action = require'finder.action'
 local mappings = require'finder.mappings'
+local util = require'finder.util'
 local M	= {}
 
 local function create_opts(opts)
@@ -169,6 +170,33 @@ function M.grep(opts)
 	if opts.preview_disabled then
 		pop_opts.preview = nil
 	end
+	popfix:new(pop_opts)
+end
+
+function M.help_tags(opts)
+	opts = opts or {}
+	local actions = action.new_help_action()
+	local keymaps = mappings.new{
+		close_selected = actions.edit,
+		tab_close = actions.tab,
+		split_close = actions.split,
+		vert_split_close = actions.vert_split
+	}
+	local pop_opts = create_opts(opts)
+	local tags = {}
+	-- help tags are stored in doc/tags file of RTP (runtimepath of neovim)
+	for _, file in pairs(vim.fn.findfile('doc/tags', vim.o.runtimepath, -1)) do
+		local f = assert(io.open(file, "rb"))
+		for line in f:lines() do
+			local splits = util.split(line, '\t')
+			table.insert(tags, splits[1])
+		end
+		f:close()
+	end
+	pop_opts.preview = nil
+	pop_opts.data = tags
+	pop_opts.keymaps = keymaps
+	pop_opts.prompt.title = 'Help Tags'
 	popfix:new(pop_opts)
 end
 

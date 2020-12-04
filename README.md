@@ -93,6 +93,12 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    If you want to contribute to the fuzzy engine for this command make a PR in
    popfix repository.
 
+- **Help Tags**
+   Search through all your help tags. Easy help.
+
+   Call:
+   ``:lua require'finder'.help_tags{}``
+
 ## Custom Opts
 These are custom opts supported by every nvim-finder command:
 
