@@ -93,6 +93,13 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    If you want to contribute to the fuzzy engine for this command make a PR in
    popfix repository.
 
+- **Buffers**
+
+   Search through all your open buffers with live buffer preview.
+
+   Call: 
+   ``:lua require'finder'.buffers{}``
+
 - **Help Tags**
    Search through all your help tags. Easy help.
 

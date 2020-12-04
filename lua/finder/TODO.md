@@ -5,5 +5,3 @@ something is not listed and you want, create an issue and PR. If it is listed
 here, then I am working on it. Creating a PR on that would duplicate the work.
 
 ## To implement
-
-- buffers

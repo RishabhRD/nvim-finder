@@ -38,4 +38,24 @@ function M.new_bat_location_preview(cwd)
 	end
 end
 
+function M.new_buffer_preview()
+	local function getBufferFromLine(line)
+		local bracesOpen = 1
+		local bracesClose = string.find(line, ']')
+		return string.sub(line, bracesOpen + 1, bracesClose - bracesOpen)
+	end
+	local function getLineNumber(line)
+		local splits = util.split(line, ':')
+		return splits[#splits]
+	end
+	return function(_, line)
+		if line == nil then return {} end
+		local buf = getBufferFromLine(line)
+		return {
+			bufnr = buf,
+			line = getLineNumber(line)
+		}
+	end
+end
+
 return M

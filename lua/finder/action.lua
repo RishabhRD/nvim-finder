@@ -2,6 +2,28 @@ local util = require'finder.util'
 local path = require'finder.path'
 local M = {}
 
+local function getBufferFromLine(line)
+	local bracesOpen = 1
+	local bracesClose = string.find(line, ']')
+	return string.sub(line, bracesOpen + 1, bracesClose - bracesOpen)
+end
+
+local function openBuffer(bufnr, line, option)
+	if option == 'edit' then
+		vim.cmd(string.format('buffer %s', bufnr))
+		vim.cmd(string.format('%d',line))
+	elseif option == 'split' then
+		vim.cmd(string.format('sbuffer %s', bufnr))
+		vim.cmd(string.format('%d',line))
+	elseif option == 'vert_split' then
+		vim.cmd(string.format('vert sbuffer %s', bufnr))
+		vim.cmd(string.format('%d',line))
+	elseif option == 'tab' then
+		vim.cmd(string.format('tab sb %s', bufnr))
+		vim.cmd(string.format('%d',line))
+	end
+end
+
 local function openFile(filename, cwd, option)
 	if filename == nil then return end
 	cwd = cwd or vim.fn.getcwd()
@@ -131,6 +153,27 @@ function M.new_command_action()
 	return {
 		edit = function (_, line)
 			vim.cmd(line)
+		end
+	}
+end
+
+function M.new_buffer_action()
+	local function getLineNumber(line)
+		local splits = util.split(line, ':')
+		return splits[#splits]
+	end
+	return{
+		edit = function(_, line)
+			openBuffer(getBufferFromLine(line), getLineNumber(line), 'edit')
+		end,
+		vert_split = function(_, line)
+			openBuffer(getBufferFromLine(line), getLineNumber(line), 'vert_split')
+		end,
+		split = function(_, line)
+			openBuffer(getBufferFromLine(line), getLineNumber(line), 'split')
+		end,
+		tab =  function(_, line)
+			openBuffer(getBufferFromLine(line), getLineNumber(line), 'tab')
 		end
 	}
 end
