@@ -97,7 +97,7 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    Search through all your help tags. Easy help.
 
    Call:
-   ``:lua require'finder'.help_tags{}``
+  ``:lua require'finder'.help_tags{}``
 
 ## Custom Opts
 These are custom opts supported by every nvim-finder command:

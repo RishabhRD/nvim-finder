@@ -200,4 +200,20 @@ function M.help_tags(opts)
 	popfix:new(pop_opts)
 end
 
+function M.colorschemes(opts)
+	opts = opts or {}
+	local actions = action.new_colorscheme_action()
+	local keymaps = mappings.new{
+		close_selected = actions.edit,
+	}
+	local pop_opts = create_opts(opts)
+	-- getcompletion vimscript function returns all colorscheme for color
+	-- completion
+	pop_opts.data = vim.fn.getcompletion('', 'color')
+	pop_opts.preview = nil
+	pop_opts.keymaps = keymaps
+	pop_opts.prompt.title = 'colorschemes'
+	popfix:new(pop_opts)
+end
+
 return M
