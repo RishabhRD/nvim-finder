@@ -7,4 +7,3 @@ here, then I am working on it. Creating a PR on that would duplicate the work.
 ## To implement
 
 - buffers
-- file history

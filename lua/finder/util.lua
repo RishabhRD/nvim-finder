@@ -13,7 +13,13 @@ local function p(t)
 	print(vim.inspect(t))
 end
 
+local function file_readable(name)
+   local f=io.open(name,"r")
+   if f~=nil then io.close(f) return true else return false end
+end
+
 return {
 	split = split,
 	p = p,
+	file_readable = file_readable
 }

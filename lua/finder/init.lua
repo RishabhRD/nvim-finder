@@ -269,5 +269,34 @@ function M.command_history(opts)
 	popfix:new(pop_opts)
 end
 
+function M.file_history(opts)
+	opts = opts or {}
+	local previewFunction = preview.new_bat_preview('/')
+	local fileActions = action.new_file_action('/')
+	local keymaps = mappings.new{
+		close_selected = fileActions.edit,
+		select = previewFunction,
+		tab_close = fileActions.tab,
+		split_close = fileActions.split,
+		vert_split_close = fileActions.vert_split
+	}
+	local pop_opts = create_opts(opts)
+	pop_opts.data = {}
+	local dataLen = 0
+	for _,file in ipairs(vim.v.oldfiles) do
+		if util.file_readable(file) then
+			dataLen = dataLen + 1
+			pop_opts.data[dataLen] = file
+		end
+	end
+	pop_opts.callbacks.select = previewFunction
+	pop_opts.keymaps = keymaps
+	pop_opts.prompt.title = 'File History'
+	if opts.preview_disabled then
+		pop_opts.preview = nil
+	end
+	popfix:new(pop_opts)
+end
+
 
 return M

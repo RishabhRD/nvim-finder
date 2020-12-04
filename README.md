@@ -106,16 +106,22 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
   ``:lua require'finder'.filetypes{}``
 
 - **Commands**
-   Search through all commands currently loaded in neovim.
+   Search through all commands currently loaded in neovim and execute them.
 
    Call:
   ``:lua require'finder'.commands{}``
 
 - **Command History**
-   Search through all commands history.
+   Search through all commands history and execute them.
 
    Call:
   ``:lua require'finder'.command_history{}``
+
+- **File History**
+   Search through all file history and just open them right away.
+
+   Call:
+  ``:lua require'finder'.file_history{}``
 
 
 ## Custom Opts
