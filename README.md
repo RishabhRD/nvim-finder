@@ -80,6 +80,9 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    
    Grep through all your files in directory with plain search.
 
+   Call: 
+   ``:lua require'finder'.grep{}``
+
    **Why to use when fuzzy grep is there ?**
 
    Because of performance. In large directory, fuzzy finding all things would
