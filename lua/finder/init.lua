@@ -232,4 +232,21 @@ function M.filetypes(opts)
 	popfix:new(pop_opts)
 end
 
+function M.commands(opts)
+	opts = opts or {}
+	local actions = action.new_command_action()
+	local keymaps = mappings.new{
+		close_selected = actions.edit,
+	}
+	local pop_opts = create_opts(opts)
+	-- getcompletion vimscript function returns all filetypes for filetype
+	-- completion
+	pop_opts.data = vim.fn.getcompletion('', 'command')
+	pop_opts.preview = nil
+	pop_opts.keymaps = keymaps
+	pop_opts.prompt.title = 'Commands'
+	popfix:new(pop_opts)
+end
+
+
 return M

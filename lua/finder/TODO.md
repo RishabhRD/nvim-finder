@@ -6,7 +6,5 @@ here, then I am working on it. Creating a PR on that would duplicate the work.
 
 ## To implement
 
-- filetypes
-- functions
-- commands
 - buffers
+- command_history

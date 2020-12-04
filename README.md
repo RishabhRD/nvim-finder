@@ -105,6 +105,13 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    Call:
   ``:lua require'finder'.filetypes{}``
 
+- **Commands**
+   Search through all commands currently loaded in neovim.
+
+   Call:
+  ``:lua require'finder'.commands{}``
+
+
 ## Custom Opts
 These are custom opts supported by every nvim-finder command:
 

@@ -127,4 +127,12 @@ function M.new_filetype_action()
 	}
 end
 
+function M.new_command_action()
+	return {
+		edit = function (_, line)
+			vim.cmd(line)
+		end
+	}
+end
+
 return M
