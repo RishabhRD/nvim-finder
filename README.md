@@ -69,6 +69,27 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    Call: 
    ``:lua require'finder'.git_files{}``
 
+- **Fuzzy Grep**
+
+   Grep through all your files in directory with fuzzy finding.
+
+   Call: 
+   ``:lua require'finder'.fuzzy_grep{}``
+
+- **Grep**
+   
+   Grep through all your files in directory with plain search.
+
+   **Why to use when fuzzy grep is there ?**
+
+   Because of performance. In large directory, fuzzy finding all things would
+   take time. This command is not built upon default fuzzy engine of popfix
+   so maybe not as responsive as default command in large directory. However,
+   it would search what you want quite fast.
+
+   If you want to contribute to the fuzzy engine for this command make a PR in
+   popfix repository.
+
 ## Custom Opts
 These are custom opts supported by every nvim-finder command:
 
@@ -77,6 +98,12 @@ Directory from which command will be launched. By default vim's current working
 directory is used.
 
 Example: ``cwd = '/home/user/.config/nvim'``
+
+### cmd [string]
+Command used for find files in directory
+
+Example: ``cmd = 'find .'``
+
 
 ### preview_disabled [boolean]
 Decides if preview will be disabled for the command. Doesn't effect when
@@ -118,16 +145,6 @@ you own sorter. To read about sorter see [popfix](https://github.com/RishabhRD/p
 By default fzy native sorter is used.
 
 Example: ``sorter = require'popfix.sorter'.new_fzy_soter()``
-
-## Specialized custom opts for different commands
-
-### Files
-
-#### cmd [string]
-Command used for find files in directory
-
-Example: ``cmd = 'find .'``
-
 
 ## Contribute
 
