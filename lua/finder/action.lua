@@ -119,4 +119,12 @@ function M.new_colorscheme_action()
 	}
 end
 
+function M.new_filetype_action()
+	return {
+		edit = function (_, line)
+			vim.cmd(string.format('setfiletype %s', line))
+		end
+	}
+end
+
 return M

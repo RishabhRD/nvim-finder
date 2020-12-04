@@ -99,6 +99,12 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    Call:
   ``:lua require'finder'.help_tags{}``
 
+- **File types**
+   Search through the file type and set the filetype for the current buffer.
+
+   Call:
+  ``:lua require'finder'.filetypes{}``
+
 ## Custom Opts
 These are custom opts supported by every nvim-finder command:
 

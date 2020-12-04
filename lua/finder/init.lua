@@ -216,4 +216,20 @@ function M.colorschemes(opts)
 	popfix:new(pop_opts)
 end
 
+function M.filetypes(opts)
+	opts = opts or {}
+	local actions = action.new_filetype_action()
+	local keymaps = mappings.new{
+		close_selected = actions.edit,
+	}
+	local pop_opts = create_opts(opts)
+	-- getcompletion vimscript function returns all filetypes for filetype
+	-- completion
+	pop_opts.data = vim.fn.getcompletion('', 'filetype')
+	pop_opts.preview = nil
+	pop_opts.keymaps = keymaps
+	pop_opts.prompt.title = 'filetypes'
+	popfix:new(pop_opts)
+end
+
 return M
