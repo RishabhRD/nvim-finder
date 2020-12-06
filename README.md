@@ -16,6 +16,7 @@ Install it as any other plugin. For example with vim-plug:
 
 - Add this to your init.vim:
    ```vim
+   Plug 'RishabhRD/popfix'
    Plug 'RishabhRD/nvim-finder'
    ```
 - After re-sorurcing init.vim
