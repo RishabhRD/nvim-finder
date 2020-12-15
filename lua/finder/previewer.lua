@@ -53,7 +53,7 @@ function M.new_buffer_preview()
 		local buf = getBufferFromLine(line)
 		return {
 			bufnr = buf,
-			line = getLineNumber(line)
+			line = tonumber(getLineNumber(line))
 		}
 	end
 end
