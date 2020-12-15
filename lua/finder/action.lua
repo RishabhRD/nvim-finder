@@ -22,6 +22,7 @@ local function openBuffer(bufnr, line, option)
 		vim.cmd(string.format('tab sb %s', bufnr))
 		vim.cmd(string.format('%d',line))
 	end
+	vim.cmd(':normal! zz')
 end
 
 local function openFile(filename, cwd, option)
@@ -38,6 +39,7 @@ local function openFile(filename, cwd, option)
 	elseif option == 'tab' then
 		vim.cmd(string.format('tabnew %s', filename))
 	end
+	vim.cmd(':normal! zz')
 end
 
 local function openFileLocation(filename, line, cwd, option)
@@ -55,6 +57,7 @@ local function openFileLocation(filename, line, cwd, option)
 		vim.cmd(string.format('tabnew %s', filename))
 	end
 	vim.cmd(string.format('%d', line))
+	vim.cmd(':normal! zz')
 end
 
 function M.new_file_action(cwd)
