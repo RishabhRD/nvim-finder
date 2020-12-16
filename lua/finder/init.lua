@@ -18,16 +18,27 @@ local function create_opts(opts)
 		width = opts.width,
 		callbacks = {},
 		list = {
+			coloring = true,
 			border = true,
+			border_highlight = 'FinderListBorder',
+			highlight = 'FinderListHighlight',
+			selection_highlight = 'FinderListSelection',
+			matching_highlight = 'FinderListMatch'
 		},
 		prompt = {
 			init_text = opts.init_text,
 			border = true,
+			border_highlight = 'FinderPromptBorder',
+			highlight = 'FinderPromptHighlight',
+			prompt_highlight = 'FinderPromptCommand',
 		},
 		preview = {
 			type = 'terminal',
 			title = 'Preview',
 			border = true,
+			border_highlight = 'FinderPreviewBorder',
+			highlight = 'FinderPreviewHighlight',
+			preview_highlight = 'FinderPreviewLine'
 		},
 		sorter = opts.sorter
 	}

@@ -8,3 +8,13 @@ unlet s:save_cpo
 
 let g:loaded_finder = 1
 
+hi link FinderPromptBorder Normal
+hi link FinderPreviewBorder Normal
+hi link FinderListBorder Normal
+hi link FinderPromptHighlight Normal
+hi link FinderPreviewHighlight Normal
+hi link FinderListHighlight Normal
+hi link FinderListSelection Visual
+hi link FinderListMatch Identifier
+hi link FinderPromptCommand Normal
+hi link FinderPreviewLine Visual
