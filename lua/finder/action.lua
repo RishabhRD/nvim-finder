@@ -64,15 +64,19 @@ function M.new_file_action(cwd)
 	cwd = cwd or vim.fn.getcwd()
 	return{
 		edit = function(_, line)
+			if line == nil then return end
 			openFile(line, cwd, 'edit')
 		end,
 		vert_split = function(_, line)
+			if line == nil then return end
 			openFile(line, cwd, 'vert_split')
 		end,
 		split = function(_, line)
+			if line == nil then return end
 			openFile(line, cwd, 'split')
 		end,
 		tab =  function(_, line)
+			if line == nil then return end
 			openFile(line, cwd, 'tab')
 		end
 	}
@@ -82,24 +86,28 @@ function M.new_file_location_action(cwd)
 	cwd = cwd or vim.fn.getcwd()
 	return{
 		edit = function(_, line)
+			if line == nil then return end
 			local splits = util.split(line, ':')
 			local filename = splits[1]
 			local lnum = splits[2]
 			openFileLocation(filename, lnum, cwd, 'edit')
 		end,
 		vert_split = function(_, line)
+			if line == nil then return end
 			local splits = util.split(line, ':')
 			local filename = splits[1]
 			local lnum = splits[2]
 			openFileLocation(filename, lnum, cwd, 'vert_split')
 		end,
 		split = function(_, line)
+			if line == nil then return end
 			local splits = util.split(line, ':')
 			local filename = splits[1]
 			local lnum = splits[2]
 			openFileLocation(filename, lnum, cwd, 'split')
 		end,
 		tab =  function(_, line)
+			if line == nil then return end
 			local splits = util.split(line, ':')
 			local filename = splits[1]
 			local lnum = splits[2]
@@ -122,15 +130,19 @@ function M.new_help_action()
 	end
 	return{
 		edit = function(_, line)
+			if line == nil then return end
 			helpOpen(line, 'edit')
 		end,
 		vert_split = function(_, line)
+			if line == nil then return end
 			helpOpen(line, 'vert_split')
 		end,
 		split = function(_, line)
+			if line == nil then return end
 			helpOpen(line, 'split')
 		end,
 		tab =  function(_, line)
+			if line == nil then return end
 			helpOpen(line, 'tab')
 		end
 	}
@@ -139,6 +151,7 @@ end
 function M.new_colorscheme_action()
 	return {
 		edit = function (_, line)
+			if line == nil then return end
 			vim.cmd(string.format('colorscheme %s', line))
 		end
 	}
@@ -147,6 +160,7 @@ end
 function M.new_filetype_action()
 	return {
 		edit = function (_, line)
+			if line == nil then return end
 			vim.cmd(string.format('setfiletype %s', line))
 		end
 	}
@@ -155,6 +169,7 @@ end
 function M.new_command_action()
 	return {
 		edit = function (_, line)
+			if line == nil then return end
 			vim.cmd(line)
 		end
 	}
@@ -167,15 +182,19 @@ function M.new_buffer_action()
 	end
 	return{
 		edit = function(_, line)
+			if line == nil then return end
 			openBuffer(getBufferFromLine(line), getLineNumber(line), 'edit')
 		end,
 		vert_split = function(_, line)
+			if line == nil then return end
 			openBuffer(getBufferFromLine(line), getLineNumber(line), 'vert_split')
 		end,
 		split = function(_, line)
+			if line == nil then return end
 			openBuffer(getBufferFromLine(line), getLineNumber(line), 'split')
 		end,
 		tab =  function(_, line)
+			if line == nil then return end
 			openBuffer(getBufferFromLine(line), getLineNumber(line), 'tab')
 		end
 	}
