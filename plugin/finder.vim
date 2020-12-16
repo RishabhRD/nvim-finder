@@ -15,6 +15,5 @@ hi link FinderPromptHighlight Normal
 hi link FinderPreviewHighlight Normal
 hi link FinderListHighlight Normal
 hi link FinderListSelection Visual
-hi link FinderListMatch Identifier
+hi FinderListMatch gui=bold guifg=#af4c09 ctermfg=yellow
 hi link FinderPromptCommand Normal
-hi link FinderPreviewLine Visual
