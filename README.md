@@ -229,6 +229,10 @@ Defines the appearance of list characters that match with current prompt text.
 
 Defines the appearance of prompt string (default prompt command is >)
 
+- **FinderPreviewLine**
+
+Defines the appearance of highlighted line in preview window.
+
 ## Contribute
 
 Raise an issue or create a PR if you feel some important command is missing.
