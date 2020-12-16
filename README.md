@@ -186,7 +186,48 @@ you own sorter. To read about sorter see [popfix](https://github.com/RishabhRD/p
 
 By default fzy native sorter is used.
 
-Example: ``sorter = require'popfix.sorter'.new_fzy_soter()``
+Example: ``sorter = require'popfix.sorter':new_fzy_soter()``
+
+## Custom Highlighting
+
+nvim-finder exposes some highlight group that highlight different elements
+of fuzzy window.
+
+- **FinderListBorder**
+
+Border color of nvim-finder's list window
+
+- **FinderPreviewBorder**
+
+Border color of nvim-finder's preview window
+
+- **FinderPromptBorder**
+
+Border color of nvim-finder's prompt window
+
+- **FinderListHighlight**
+
+Defines foreground and background color of list.
+
+- **FinderPreviewHighlight**
+
+Defines foreground and background color of preview.
+
+- **FinderPromptHighlight**
+
+Defines foreground and background color of prompt window.
+
+- **FinderListSelection**
+
+Defines the appearance of selected list element.
+
+- **FinderListMatch**
+
+Defines the appearance of list characters that match with current prompt text.
+
+- **FinderPromptCommand**
+
+Defines the appearance of prompt string (default prompt command is >)
 
 ## Contribute
 
