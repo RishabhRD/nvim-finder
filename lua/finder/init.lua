@@ -42,6 +42,11 @@ local function create_opts(opts)
 	},
 	sorter = opts.sorter
     }
+    if not opts.sorter then
+	if vim.g.enable_finder_native_sorter then
+	    new_opts.sorter = require'popfix.sorter':new_fzy_native_sorter()
+	end
+    end
     return new_opts
 end
 

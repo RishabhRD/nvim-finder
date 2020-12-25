@@ -151,6 +151,19 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
     ``:lua require'finder'.man_pages{}``
 
 
+## Enabling native sorter
+
+popfix also ships an optional sorter 'native-fzy-sorter' as a separate git
+submodule. This sorter is written in C and is very fast in compare to other
+sorters. This gives a huge performance boost.
+
+If you have enabled popfix's native-fzy-sorter (read popfix's README.md for
+steps) then you can use this sorter as default sorter for nvim-finder using:
+
+```lua
+vim.g.enable_finder_native_sorter = true
+```
+
 ## Custom Opts
 
 These are custom opts supported by every nvim-finder command:
