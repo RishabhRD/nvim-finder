@@ -333,12 +333,15 @@ end
 
 function M.finder_commands(opts)
     opts = opts or {}
-    local manActions = action.new_man_action()
+    local manActions = action.new_finder_command_action()
     local pop_opts = create_opts(opts)
     pop_opts.keymaps = getMappingsFromActions(manActions)
     pop_opts.preview = nil
-    pop_opts.prompt.title = 'Man Pages'
+    pop_opts.prompt.title = 'Finder commands'
     pop_opts.data = {}
+    for k, _ in pairs(require'finder') do
+	table.insert(pop_opts.data, k)
+    end
     popfix:new(pop_opts)
 end
 

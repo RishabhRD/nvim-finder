@@ -150,6 +150,12 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
     Call:
     ``:lua require'finder'.man_pages{}``
 
+- **Finder Commands**
+
+    Fuzzy search through all of the commands exported by nvim-finder itself.
+
+    Call:
+    ``:lua require'finder'.finder_commands{}``
 
 ## Enabling native sorter
 

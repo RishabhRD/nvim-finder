@@ -252,4 +252,12 @@ function M.new_man_action()
     }
 end
 
+function M.new_finder_command_action()
+    return {
+	edit = function (_, line)
+	    require'finder'[line]()
+	end
+    }
+end
+
 return M
