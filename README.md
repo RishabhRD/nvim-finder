@@ -102,68 +102,94 @@ nnoremap <leader>p <cmd>lua require'finder'.files{}<CR>
    ``:lua require'finder'.buffers{}``
 
 - **Help Tags**
+
    Search through all your help tags. Easy help.
 
    Call:
   ``:lua require'finder'.help_tags{}``
 
 - **File types**
+
    Search through the file type and set the filetype for the current buffer.
 
    Call:
   ``:lua require'finder'.filetypes{}``
 
 - **Commands**
+
    Search through all commands currently loaded in neovim and execute them.
 
    Call:
   ``:lua require'finder'.commands{}``
 
 - **Command History**
+
    Search through all commands history and execute them.
 
    Call:
   ``:lua require'finder'.command_history{}``
 
 - **File History**
+
    Search through all file history and just open them right away.
 
    Call:
   ``:lua require'finder'.file_history{}``
 
+- **Buffer Lines**
+
+    Search through all current buffer lines.
+
+    Call:
+    ``:lua require'finder'.buffer_lines{}``
+
+- **Man Pages**
+
+    Fuzzy search through all man pages.
+
+    Call:
+    ``:lua require'finder'.man_pages{}``
+
 
 ## Custom Opts
+
 These are custom opts supported by every nvim-finder command:
 
 ### cwd [string]
+
 Directory from which command will be launched. By default vim's current working
 directory is used.
 
 Example: ``cwd = '/home/user/.config/nvim'``
 
 ### cmd [string]
+
 Command used for find files in directory
 
 Example: ``cmd = 'find .'``
 
 
 ### preview_disabled [boolean]
+
 Decides if preview will be disabled for the command. Doesn't effect when
 command doesn't support preview. Default is false.
 
 Example: ``preview_disabled = true``
 
 ### height [integer]
+
 Height of finder window.
 
 Example: ``height = 24``
 
 ### width [integer]
+
 Width of finder window.
 
 Example: ``width = 24``
 
 ### mode [string]
+
 Render mode of plugin. nvim-finder supports multiple rendering modes.
 
 Supported rendering modes are:
@@ -174,11 +200,13 @@ Supported rendering modes are:
 Example: ``mode = 'split'``
 
 ### init_text [string]
+
 Initial text with which plugin would start.
 
 Example: ``init_text = 'somefile.cc'``
 
 ### sorter [sorter's instance] [See [popfix](https://github.com/RishabhRD/popfix)]
+
 Custom sorter for command. Sorter changes the way plugin sorts the result
 according to current prompt text.
 You can pick some predefined sorter from popfix's builtin sorters or can have
