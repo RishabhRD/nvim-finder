@@ -8,7 +8,7 @@ function M.new_bat_preview(cwd)
 	cwd = cwd or vim.fn.getcwd()
 	line = cwd .. '/' .. line
 	line = path.normalize(line)
-	local cmd   = string.format('bat %s -p -n',line)
+	local cmd   = string.format([[bat %s -p --paging=always --pager "less -RS"]],line)
 	return {
 	    cmd	= cmd,
 	    cwd = cwd
@@ -29,7 +29,7 @@ function M.new_bat_location_preview(cwd)
 	if startPoint <= 0 then
 	    startPoint = lnum
 	end
-	local cmd   = string.format('bat %s -p -n -H %s -r %s:',filename, lnum,
+	local cmd   = string.format('bat %s -p --paging=always --pager "less -RS" -H %s -r %s:',filename, lnum,
 	startPoint)
 	return {
 	    cmd	= cmd,
