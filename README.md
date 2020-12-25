@@ -26,6 +26,35 @@ Install it as any other plugin. For example with vim-plug:
 
 ## Invoking plugin
 
+### Using vimscript commands
+
+nvim-finder ships a ``Finder`` command. Any nvim-finder function can be invoked using:
+
+```vim
+:Finder command init_text
+```
+
+command is the function needed to be invoked (like files, git_files, grep, etc).
+Tab-completion would also list all the commands available in nvim-finder.
+
+init_text is the initial prompt text with which nvim-finder would be launched.
+If not provided, then nvim-finder would launch with no initial prompt text (the
+default behavior).
+
+Example:
+
+This would launch file searcher (default behavior) :
+
+```vim
+:Finder files
+```
+
+This would launch file searcher with ``init.vim`` as initital prompt text:
+
+```vim
+:Finder files init.vim
+```
+
 ### Using lua
 
 #### With default opts
