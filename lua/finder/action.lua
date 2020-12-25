@@ -226,28 +226,30 @@ end
 
 function M.new_man_action()
     local function getManCommand(line)
-	return util.split(line, ' ')[1]
+	local splitTable = util.split(line, ' ')
+	local bracket = string.find(splitTable[2], ')')
+	return splitTable[1], string.sub(splitTable[2], 2, bracket - 1)
     end
     return {
 	edit = function(_, line)
 	    if line == nil then return end
-	    local cmd = getManCommand(line)
-	    vim.cmd(string.format('Man %s', cmd))
+	    local cmd, number = getManCommand(line)
+	    vim.cmd(string.format('Man %s %s', number, cmd))
 	end,
 	split = function(_, line)
 	    if line == nil then return end
-	    local cmd = getManCommand(line)
-	    vim.cmd(string.format('Man %s', cmd))
+	    local cmd, number = getManCommand(line)
+	    vim.cmd(string.format('Man %s %s', number, cmd))
 	end,
 	vert_split = function(_, line)
 	    if line == nil then return end
-	    line = getManCommand(line)
-	    vim.cmd(string.format('vert bo Man %s', line))
+	    local cmd, number = getManCommand(line)
+	    vim.cmd(string.format('vert bo Man %s %s', number, cmd))
 	end,
 	tab = function(_, line)
 	    if line == nil then return end
-	    line = getManCommand(line)
-	    vim.cmd(string.format('tab Man %s', line))
+	    local cmd, number = getManCommand(line)
+	    vim.cmd(string.format('tab Man %s %s', number, cmd))
 	end
     }
 end
