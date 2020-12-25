@@ -7,7 +7,7 @@ local util = require'finder.util'
 local M	= {}
 
 local function create_opts(opts)
-    return {
+    local new_opts = {
 	close_on_error = true,
 	data = {
 	    cwd = opts.cwd
@@ -42,6 +42,16 @@ local function create_opts(opts)
 	},
 	sorter = opts.sorter
     }
+    return new_opts
+end
+
+local function getMappingsFromActions(actions)
+    return mappings.new{
+	close_selected = actions.edit,
+	tab_close = actions.tab,
+	split_close = actions.split,
+	vert_split_close = actions.vert_split
+    }
 end
 
 function M.files(opts)
@@ -62,17 +72,10 @@ function M.files(opts)
     opts.cwd = opts.cwd or vim.fn.getcwd()
     local previewFunction = preview.new_bat_preview(opts.cwd)
     local fileActions = action.new_file_action(opts.cwd)
-    local keymaps = mappings.new{
-	close_selected = fileActions.edit,
-	select = previewFunction,
-	tab_close = fileActions.tab,
-	split_close = fileActions.split,
-	vert_split_close = fileActions.vert_split
-    }
     local pop_opts = create_opts(opts)
     pop_opts.data.cmd = cmd
     pop_opts.callbacks.select = previewFunction
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(fileActions)
     pop_opts.prompt.title = 'Files'
     if opts.preview_disabled then
 	pop_opts.preview = nil
@@ -94,17 +97,10 @@ function M.git_files(opts)
     opts.cwd = opts.cwd or vim.fn.getcwd()
     local previewFunction = preview.new_bat_preview(opts.cwd)
     local fileActions = action.new_file_action(opts.cwd)
-    local keymaps = mappings.new{
-	close_selected = fileActions.edit,
-	select = previewFunction,
-	tab_close = fileActions.tab,
-	split_close = fileActions.split,
-	vert_split_close = fileActions.vert_split
-    }
     local pop_opts = create_opts(opts)
     pop_opts.data.cmd = cmd
     pop_opts.callbacks.select = previewFunction
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(fileActions)
     pop_opts.prompt.title = 'Git Files'
     if opts.preview_disabled then
 	pop_opts.preview = nil
@@ -127,17 +123,10 @@ function M.fuzzy_grep(opts)
     opts.cwd = opts.cwd or vim.fn.getcwd()
     local previewFunction = preview.new_bat_location_preview(opts.cwd)
     local fileActions = action.new_file_location_action(opts.cwd)
-    local keymaps = mappings.new{
-	close_selected = fileActions.edit,
-	select = previewFunction,
-	tab_close = fileActions.tab,
-	split_close = fileActions.split,
-	vert_split_close = fileActions.vert_split
-    }
     local pop_opts = create_opts(opts)
     pop_opts.data.cmd = cmd
     pop_opts.callbacks.select = previewFunction
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(fileActions)
     pop_opts.prompt.title = 'Fuzzy Grep'
     if opts.preview_disabled then
 	pop_opts.preview = nil
@@ -163,17 +152,10 @@ function M.grep(opts)
     opts.cwd = opts.cwd or vim.fn.getcwd()
     local previewFunction = preview.new_bat_location_preview(opts.cwd)
     local fileActions = action.new_file_location_action(opts.cwd)
-    local keymaps = mappings.new{
-	close_selected = fileActions.edit,
-	select = previewFunction,
-	tab_close = fileActions.tab,
-	split_close = fileActions.split,
-	vert_split_close = fileActions.vert_split
-    }
     local pop_opts = create_opts(opts)
     pop_opts.data.cmd = cmd
     pop_opts.callbacks.select = previewFunction
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(fileActions)
     pop_opts.prompt.title = 'Grep'
     pop_opts.fuzzyEngine =
     require'popfix.fuzzy_engine':new_RepeatedExecutionEngine()
@@ -188,12 +170,6 @@ end
 function M.help_tags(opts)
     opts = opts or {}
     local actions = action.new_help_action()
-    local keymaps = mappings.new{
-	close_selected = actions.edit,
-	tab_close = actions.tab,
-	split_close = actions.split,
-	vert_split_close = actions.vert_split
-    }
     local pop_opts = create_opts(opts)
     local tags = {}
     -- help tags are stored in doc/tags file of RTP (runtimepath of neovim)
@@ -207,7 +183,7 @@ function M.help_tags(opts)
     end
     pop_opts.preview = nil
     pop_opts.data = tags
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(actions)
     pop_opts.prompt.title = 'Help Tags'
     popfix:new(pop_opts)
 end
@@ -215,15 +191,12 @@ end
 function M.colorschemes(opts)
     opts = opts or {}
     local actions = action.new_colorscheme_action()
-    local keymaps = mappings.new{
-	close_selected = actions.edit,
-    }
     local pop_opts = create_opts(opts)
     -- getcompletion vimscript function returns all colorscheme for color
     -- completion
     pop_opts.data = vim.fn.getcompletion('', 'color')
     pop_opts.preview = nil
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(actions)
     pop_opts.prompt.title = 'colorschemes'
     popfix:new(pop_opts)
 end
@@ -231,13 +204,10 @@ end
 function M.filetypes(opts)
     opts = opts or {}
     local actions = action.new_filetype_action()
-    local keymaps = mappings.new{
-	close_selected = actions.edit,
-    }
     local pop_opts = create_opts(opts)
     pop_opts.data = vim.fn.getcompletion('', 'filetype')
     pop_opts.preview = nil
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(actions)
     pop_opts.prompt.title = 'filetypes'
     popfix:new(pop_opts)
 end
@@ -245,13 +215,10 @@ end
 function M.commands(opts)
     opts = opts or {}
     local actions = action.new_command_action()
-    local keymaps = mappings.new{
-	close_selected = actions.edit,
-    }
     local pop_opts = create_opts(opts)
     pop_opts.data = vim.fn.getcompletion('', 'command')
     pop_opts.preview = nil
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(actions)
     pop_opts.prompt.title = 'Commands'
     popfix:new(pop_opts)
 end
@@ -259,9 +226,6 @@ end
 function M.command_history(opts)
     opts = opts or {}
     local actions = action.new_command_action()
-    local keymaps = mappings.new{
-	close_selected = actions.edit,
-    }
     local pop_opts = create_opts(opts)
     local history = vim.fn.execute('history cmd')
     local historyTable = vim.split(history, "\n")
@@ -276,7 +240,7 @@ function M.command_history(opts)
 	pop_opts.data[dataLen] = string.gsub(historyTable[i], '^%s*%d*%s*', '')
     end
     pop_opts.preview = nil
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(actions)
     pop_opts.prompt.title = 'Command History'
     popfix:new(pop_opts)
 end
@@ -285,13 +249,6 @@ function M.file_history(opts)
     opts = opts or {}
     local previewFunction = preview.new_bat_preview('/')
     local fileActions = action.new_file_action('/')
-    local keymaps = mappings.new{
-	close_selected = fileActions.edit,
-	select = previewFunction,
-	tab_close = fileActions.tab,
-	split_close = fileActions.split,
-	vert_split_close = fileActions.vert_split
-    }
     local pop_opts = create_opts(opts)
     pop_opts.data = {}
     local dataLen = 0
@@ -302,7 +259,7 @@ function M.file_history(opts)
 	end
     end
     pop_opts.callbacks.select = previewFunction
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(fileActions)
     pop_opts.prompt.title = 'File History'
     if opts.preview_disabled then
 	pop_opts.preview = nil
@@ -314,13 +271,6 @@ function M.buffers(opts)
     opts = opts or {}
     local previewFunction = preview.new_buffer_preview()
     local fileActions = action.new_buffer_action()
-    local keymaps = mappings.new{
-	close_selected = fileActions.edit,
-	select = previewFunction,
-	tab_close = fileActions.tab,
-	split_close = fileActions.split,
-	vert_split_close = fileActions.vert_split
-    }
     local cwd = vim.fn.getcwd()
     local pop_opts = create_opts(opts)
     local buffers = vim.fn.getcompletion('', 'buffer')
@@ -342,13 +292,48 @@ function M.buffers(opts)
 	buffer, lnum)
     end
     pop_opts.callbacks.select = previewFunction
-    pop_opts.keymaps = keymaps
+    pop_opts.keymaps = getMappingsFromActions(fileActions)
     pop_opts.preview.type = 'buffer'
     pop_opts.preview.numbering = true
     pop_opts.prompt.title = 'Buffers'
     if opts.preview_disabled then
 	pop_opts.preview = nil
     end
+    popfix:new(pop_opts)
+end
+
+function M.buffer_lines(opts)
+    opts = opts or {}
+    local lineActions = action.new_current_buffer_lines_action()
+    local pop_opts = create_opts(opts)
+    pop_opts.data = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    pop_opts.keymaps = getMappingsFromActions(lineActions)
+    pop_opts.preview = nil
+    pop_opts.prompt.title = 'Buffer Lines'
+    popfix:new(pop_opts)
+end
+
+function M.man_pages(opts)
+    opts = opts or {}
+    local manActions = action.new_man_action()
+    local pop_opts = create_opts(opts)
+    pop_opts.keymaps = getMappingsFromActions(manActions)
+    pop_opts.preview = nil
+    pop_opts.prompt.title = 'Man Pages'
+    pop_opts.data = {
+	cmd = 'man -k .'
+    }
+    popfix:new(pop_opts)
+end
+
+function M.finder_commands(opts)
+    opts = opts or {}
+    local manActions = action.new_man_action()
+    local pop_opts = create_opts(opts)
+    pop_opts.keymaps = getMappingsFromActions(manActions)
+    pop_opts.preview = nil
+    pop_opts.prompt.title = 'Man Pages'
+    pop_opts.data = {}
     popfix:new(pop_opts)
 end
 

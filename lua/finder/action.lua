@@ -175,6 +175,30 @@ function M.new_command_action()
     }
 end
 
+function M.new_current_buffer_lines_action()
+    return {
+	edit = function(index, _)
+	    if index == nil then return end
+	    vim.cmd(string.format('%s', index))
+	end,
+	split = function(index, _)
+	    if index == nil then return end
+	    vim.cmd('split')
+	    vim.cmd(string.format('%s', index))
+	end,
+	vert_split = function(index, _)
+	    if index == nil then return end
+	    vim.cmd('vsplit')
+	    vim.cmd(string.format('%s', index))
+	end,
+	tab = function(index, _)
+	    if index == nil then return end
+	    vim.cmd('tab split')
+	    vim.cmd(string.format('%s', index))
+	end,
+    }
+end
+
 function M.new_buffer_action()
     local function getLineNumber(line)
 	local splits = util.split(line, ':')
@@ -196,6 +220,34 @@ function M.new_buffer_action()
 	tab =  function(_, line)
 	    if line == nil then return end
 	    openBuffer(getBufferFromLine(line), getLineNumber(line), 'tab')
+	end
+    }
+end
+
+function M.new_man_action()
+    local function getManCommand(line)
+	return util.split(line, ' ')[1]
+    end
+    return {
+	edit = function(_, line)
+	    if line == nil then return end
+	    local cmd = getManCommand(line)
+	    vim.cmd(string.format('Man %s', cmd))
+	end,
+	split = function(_, line)
+	    if line == nil then return end
+	    local cmd = getManCommand(line)
+	    vim.cmd(string.format('Man %s', cmd))
+	end,
+	vert_split = function(_, line)
+	    if line == nil then return end
+	    line = getManCommand(line)
+	    vim.cmd(string.format('vert bo Man %s', line))
+	end,
+	tab = function(_, line)
+	    if line == nil then return end
+	    line = getManCommand(line)
+	    vim.cmd(string.format('tab Man %s', line))
 	end
     }
 end
